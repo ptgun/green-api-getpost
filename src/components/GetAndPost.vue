@@ -5,28 +5,21 @@
 
         <v-col cols="12" xs="6" sm="6">
 
-          <v-text-field label="IdInstance" placeholder="XXX" readonly v-model="idInstance" type="text"></v-text-field>
-
-
-          <v-text-field label="ApiToken Instance" placeholder="XXX" readonly v-model="apiTokenInstance"
+          <v-text-field label="IdInstance" placeholder="XXX" v-model="idInstance" type="text"></v-text-field>
+          <v-text-field label="ApiToken Instance" placeholder="XXX" v-model="apiTokenInstance"
             type="text"></v-text-field>
 
 
-          <v-btn color="#5865f2" block class="ma-1" @click="initGetMethod('setSettings')">get Settings
-          </v-btn>
-
-          <v-btn color="#5865f2" block class="ma-1" @click="initGetMethod('getStateInstance')">get State Instance
-          </v-btn>
+          <v-btn color="#5865f2" block class="ma-1" @click="initGetMethod('setSettings')">get Settings</v-btn>
+          <v-btn color="#5865f2" block class="ma-1" @click="initGetMethod('getStateInstance')">get State
+            Instance</v-btn>
 
 
           <v-container>
             <v-card> <v-text-field label="Chat ID" placeholder="Chat ID" v-model="message.chatId"
                 type="text"></v-text-field>
-
-
               <v-textarea block label="Message" model-value="" v-model="message.message" name="input-7-2"
                 variant="filled" auto-grow></v-textarea>
-
               <div class="text-center">
                 <v-btn color="#5865f2" class="ma-1 center" @click="initPostMethod('sendMessage', this.message)">Send
                   Message
@@ -52,6 +45,8 @@
           </v-container>
 
         </v-col>
+
+
 
         <v-col cols="12" xs="6" sm="6">
           <div class="is-error-msg" v-if="isError">
@@ -79,11 +74,11 @@ export default {
       apiUrl: "https://1103.api.green-api.com",
       mediaUrl: "https://1103.media.green-api.com",
       message: {
-        chatId: "79668773633@c.us",
+        chatId: "",
         message: ""
       },
       fileLink: {
-        chatId: "79668773633@c.us",
+        chatId: "",
         urlFile: "",
         fileName: ""
       },
@@ -97,6 +92,7 @@ export default {
     },
   },
   methods: {
+    // функция для методов get
     initGetMethod(methodName) {
       const vue = this;
       vue.isError = false;
@@ -120,6 +116,7 @@ export default {
       }
 
     },
+    // функция для методов post
     initPostMethod(methodName, body) {
       const vue = this;
       vue.isError = false;
@@ -143,9 +140,11 @@ export default {
         vue.responseError(e)
       }
     },
+    // сконструировать url для запроса
     getLinkByMethod(method) {
       return `${this.ins_url}/${method}/${this.apiTokenInstance}`
     },
+    // если есть ошибка, показать это
     responseError(errMsg) {
       this.response = errMsg
       this.isError = true;
